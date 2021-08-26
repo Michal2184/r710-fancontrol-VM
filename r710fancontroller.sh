@@ -47,26 +47,7 @@ SYSTEMP=$(ipmitool -I lanplus -H $IPMIHOST -U $IPMIUSER -P $IPMIPW -y $IPMIEK sd
 if [[ $SYSTEMP > 30 ]]; then
   echo   "Warning: SysTemp too high! Activating dynamic fan control! ($SYSTEMP C)"
   setfans auto
-elif [[ $SYSTEMP > 90 ]]; then
-  setfans 100
-elif [[ $SYSTEMP > 89 ]]; then
-  setfans 95
-elif [[ $SYSTEMP > 88 ]]; then
-  setfans 90
-elif [[ $SYSTEMP > 86 ]]; then
-  setfans 80
-elif [[ $SYSTEMP > 84 ]]; then
-  setfans 60
-elif [[ $SYSTEMP > 82 ]]; then
-  setfans 58
-elif [[ $SYSTEMP > 80 ]]; then
-  setfans 56
-elif [[ $SYSTEMP > 78 ]]; then
-  setfans 54
-elif [[ $SYSTEMP > 76 ]]; then
-  setfans 52
-elif [[ $SYSTEMP > 74 ]]; then
-  setfans 50
+#if you want to add more speeds put higher temps in ascending order
 elif [[ $SYSTEMP > 25 ]]; then
   setfans 15
 elif [[ $SYSTEMP > 21 ]]; then
