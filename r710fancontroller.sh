@@ -1,20 +1,14 @@
 #!/bin/bash
-
 # ----------------------------------------------------------------------------------
 # Script for checking the temperature reported by the ambient temperature sensor,
-# and if deemed too high send the raw IPMI command to enable dynamic fan control.
-#
-# Also get CPU temps from lm-sensors and adjust fan speeds according to defined
-# speed % which should be set according to your needs (each CPU model will vary)
+# if too high send the raw IPMI command to enable dynamic fan control.
 #
 # Requires:
 # ipmitool – apt-get install ipmitool
-# 
 # ----------------------------------------------------------------------------------
 
 # IPMI SETTINGS:
-# Modify to suit your needs.
-# DEFAULT IP: 192.168.0.120
+# Enter your IDRAC IP adress below
 IPMIHOST=192.168.1.88
 IPMIUSER=root
 IPMIPW=calvin
@@ -52,8 +46,6 @@ SYSTEMP=$(ipmitool -I lanplus -H $IPMIHOST -U $IPMIUSER -P $IPMIPW -y $IPMIEK sd
 
 if [[ $SYSTEMP > 30 ]]; then
   echo   "Warning: SysTemp too high! Activating dynamic fan control! ($SYSTEMP C)"
-  #printf "Warning: SysTemp too high! Activating dynamic fan control! ($SYSTEMP C)" | systemd-cat -t R710-IPMI-TEMP
-  #echo "Warning: SysTemp too high! Activating dynamic fan control! ($SYSTEMP C)" | /usr/bin/slacktee.sh -t "R710-IPMI-TEMP [$(hostname)]"
   setfans auto
 elif [[ $SYSTEMP > 90 ]]; then
   setfans 100
@@ -81,9 +73,7 @@ elif [[ $SYSTEMP > 21 ]]; then
   setfans 10
 else
   echo   "Temps OK (SYS: $SYSTEMP C)"
-  # healthchecks.io #curl -fsS --retry 3 https://hchk.io/XXX >/dev/null 2>&1
-  #printf "Temps OK (SYS: $SYSTEMP C, CPU: $CPUTEMP C)" | systemd-cat -t R710-IPMI-TEMP
-  #10% good idle speed..
+  # if temperature below 21`C fan set to 5% 
   setfans 5
 fi
 
