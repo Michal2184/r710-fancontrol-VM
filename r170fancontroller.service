@@ -1,0 +1,8 @@
+[Unit]
+Description=R710fancontroller
+
+[Service]
+ExecStart=/usr/sbin/r710fancontroller.sh
+
+[Install]
+WantedBy=yourLoginHere
