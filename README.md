@@ -9,13 +9,15 @@ LM-SENSORS do not work in virtual environment so this <b>script will work well w
  
 <h3>If you want to run it in the background as a service follow those steps:</h3>
  
-<h4>1. edit r170fancontroller.service file and add your details</h4>
-<h4>2. copy file to /etc/systemd/system/</h4> 
+<h4>1. copy r170fancontroller.sh to /usr/sbin/</h4>
+    sudo cp  r170fancontroller.sh /usr/sbin/
+<h4>2. edit r170fancontroller.service file and add your details</h4>
+<h4>3. copy file to /etc/systemd/system/</h4> 
     sudo cp r170fancontroller.service /etc/systemd/system/
 
-<h4> 3. reload system control</h4>
+<h4> 4. reload system control</h4>
      sudo systemctl daemon-reload
-<h4> 4. Start the service with:</h4>
+<h4> 5. Start the service with:</h4>
      sudo systemctl start r170fancontroller.service
     <br> sudo systemctl enable r170fancontroller.service
      
